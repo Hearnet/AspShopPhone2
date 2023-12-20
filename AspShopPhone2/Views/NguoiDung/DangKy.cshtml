@@ -1,0 +1,186 @@
+﻿@model AspShopPhone2.Models.KHACHHANG
+
+@{
+    ViewBag.Title = "DangKy";
+    Layout = "~/Views/Shared/_LayoutFormSub.cshtml";
+}
+
+
+
+@using (Html.BeginForm("DangKy", "NguoiDung", FormMethod.Post, new { @class = "form", id = "form-1" }))
+{
+    @Html.AntiForgeryToken()
+
+    <h3 class="heading">Đăng kí thành viên</h3>
+    <p class="desc">Nhận nhiều ưu đãi khi bạn là thành viên</p>
+    @Html.ValidationSummary(true)
+
+
+    <div class="spacer"></div>
+
+
+
+    <div class="form-group">
+        <label for="HoTen" class="form-label">Họ và tên</label>
+        <input id="HoTen" name="HoTen" type="text" placeholder="Nguyễn Văn A" class="form-control">
+        <span class="form-message"></span>
+        @Html.ValidationMessageFor(model => model.HoTen, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label for="TaiKhoan" class="form-label">Tài khoản</label>
+        <input id="TaiKhoan" name="TaiKhoan" type="text" placeholder="abc123" class="form-control">
+        <span class="form-message"></span>
+        @Html.ValidationMessageFor(model => model.TaiKhoan, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label for="MatKhau" class="form-label">Mật khẩu</label>
+        <input id="MatKhau" name="MatKhau" placeholder="Nhập mật khẩu" type="password" class="form-control">
+        <span class="form-message"></span>
+        @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <label for="repMatKhau" class="form-label">Nhập lại mật khẩu</label>
+        <input id="repMatKhau" placeholder="Nhập lại mật khẩu" type="password" class="form-control">
+        <span class="form-message"></span>
+        @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label for="Email" class="form-label">Gmail</label>
+        <input id="Email" name="Email" placeholder="abc@gmail.com" type="text" class="form-control">
+        <span class="form-message"></span>
+        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label for="DiaChiKH" class="form-label">Địa chỉ</label>
+        <input id="DiaChiKH" name="DiaChiKH" type="text" class="form-control">
+        <span class="form-message"></span>
+        @Html.ValidationMessageFor(model => model.DiaChiKH, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label for="DienThoaiKH" class="form-label">Điện thoại</label>
+        <input id="DienThoaiKH" name="DienThoaiKH" placeholder="0934739763" type="text" class="form-control">
+        <span class="form-message"></span>
+        @Html.ValidationMessageFor(model => model.DienThoaiKH, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label for="NgaySinh" class="form-label">Ngày sinh</label>
+        <input id="NgaySinh"
+               class="form-control"
+               name="NgaySinh"
+               value="@Html.Raw(DateTime.Now.ToString("yyyy-MM-dd HH:mm").Replace(' ','T'))"
+               type="datetime-local" />
+        <span class="form-message"></span>
+        @Html.ValidationMessageFor(model => model.NgaySinh, "", new { @class = "text-danger" })
+    </div>
+
+
+    <button type="submit" class="form-submit">Đăng ký</button>
+
+}
+
+
+
+
+@*<form action="" method="POST" class="form" id="form-1">
+        <h3 class="heading">Đăng kí thành viên</h3>
+        <p class="desc">Nhận nhiều ưu đãi khi bạn là thành viên</p>
+
+        <div class="spacer"></div>
+
+        <div class="form-group">
+            <label for="fullname" class="form-label">Họ và tên</label>
+            <input id="fullname" name="fullname" type="text" placeholder="VD: Võ Công Cao Cường" class="form-control">
+            <span class="form-message"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="email" class="form-label">Email</label>
+            <input id="email" name="email" type="text" placeholder="VD: email@domain.com" class="form-control">
+            <span class="form-message"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="password" class="form-label">Mật khẩu</label>
+            <input id="password" name="password" type="password" placeholder="Nhập mật khẩu" class="form-control">
+            <span class="form-message"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="password_confirmation" class="form-label">Nhập lại mật khẩu</label>
+            <input id="password_confirmation" name="password_confirmation" placeholder="Nhập lại mật khẩu" type="password" class="form-control">
+            <span class="form-message"></span>
+        </div>
+
+        <button class="form-submit">Đăng ký</button>
+    </form>*@
+
+<div>
+    @Html.ActionLink("Quay về trang chủ", "Index","PhoneStore", null, new { @class = "back-to-index" })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+<script src="~/assets/formSubmit/validater.js"></script>
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Mong muốn của chúng ta
+        Validator({
+            form: '#form-1',
+            formGroupSelector: '.form-group',
+            errorSelector: '.form-message',
+            rules: [
+                Validator.isRequired('#HoTen', 'Vui lòng nhập tên đầy đủ của bạn'),
+                Validator.isRequired('#TaiKhoan', 'Vui lòng nhập tên tài khoản'),
+                Validator.isRequired('#DiaChiKH', 'Vui lòng nhập địa chỉ'),
+                Validator.isRequired('#DienThoaiKH', 'Vui lòng nhập sđt của bạn'),
+                Validator.isRequired('#MatKhau', 'Vui lòng nhập mật khẩu'),
+                Validator.minLength('#MatKhau', 6),
+                Validator.isEmail('#Email'),
+                Validator.isRequired('#repMatKhau'),
+                Validator.isConfirmed('#repMatKhau', function () {
+                    return document.querySelector('#form-1 #MatKhau').value;
+                }, 'Mật khẩu nhập lại không chính xác')
+            ]
+            // onSubmit: function (data) {
+            //   // Call API
+            //   console.log(data);
+            // }
+        });
+
+
+        // Validator({
+        //   form: '#form-2',
+        //   formGroupSelector: '.form-group',
+        //   errorSelector: '.form-message',
+        //   rules: [
+        //     Validator.isEmail('#email'),
+        //     Validator.minLength('#password', 6),
+        //   ],
+        //   onSubmit: function (data) {
+        //     // Call API
+        //     console.log(data);
+        //   }
+        // });
+
+
+        var form2 = new Validator('#form-1');
+        //form2.onSubmit = function (data) {
+        //    console.log(data);
+        //}
+
+
+    });
+
+
+
+</script>

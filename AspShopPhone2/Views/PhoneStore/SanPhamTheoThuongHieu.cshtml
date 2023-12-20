@@ -1,0 +1,58 @@
+﻿@model IEnumerable<AspShopPhone2.Models.ChiTietSanPham>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+
+}
+
+<div class="home-product mb-16">
+    <div class="sm-gutter row">
+
+        @foreach (var dienthoai in Model)
+        {
+          <div class="col l-3 m-4 c-6">
+            <a target="_top" href="@Url.Action("ViewDetail","PhoneStore",new { id = dienthoai.id})" class="home-product-item">
+                <div class="home-product-item__img" style="background-image:
+                                         url('@Url.Content("~/assets/img/sanPham/"+ dienthoai.anhBia)')"></div>
+                <h4 class="home-product-item__name">@dienthoai.tenDienThoai</h4>
+                <div class="home-product-item__info">
+                    <div class="home-product-item__price">
+                        <span class="home-product-item__price-old">@dienthoai.giaBan</span>
+
+                        <span class="home-product-item__price-current">@dienthoai.TinhGiaMoi()</span>
+                    </div>
+                    <div class="home-product-item__action">
+                        <span class="home-product-item__like home-product-item__like--liked">
+                            <i class="home-product-item__like-icon fa-regular fa-heart"></i>
+                            <i class="home-product-item__liked-icon fa-solid fa-heart"></i>
+                        </span>
+                        <div class="home-product-item__rating">
+                            <i class="home-product-item__icon--gold fa-sharp fa-solid fa-star"></i>
+                            <i class="home-product-item__icon--gold fa-sharp fa-solid fa-star"></i>
+                            <i class="home-product-item__icon--gold fa-sharp fa-solid fa-star"></i>
+                            <i class="home-product-item__icon--gold fa-sharp fa-solid fa-star"></i>
+                            <i class="fa-sharp fa-solid fa-star"></i>
+                        </div>
+                        <span class="home-product-item__sold">Còn lại @dienthoai.soLuongTon</span>
+                    </div>
+                    <div class="home-product-item__origin">
+                        <span class="home-product-item__brand">@dienthoai.codeTH</span>
+                        <span class="home-product-item__origin-name">@dienthoai.tenTH</span>
+                    </div>
+                </div>
+                <div class="home-product-item__favorite">
+                    <i class=" fa-solid fa-check"></i>
+                    <span>Yêu thích</span>
+                </div>
+                <div class="home-product-item__sale-off">
+                    <span class="home-product-item__sale-off-percent">@dienthoai.giaGiam</span>
+                    <span class="home-product-item__sale-off-lable">GIẢM</span>
+                </div>
+            </a>
+        </div>
+        }
+
+    </div>
+</div>
+
+    

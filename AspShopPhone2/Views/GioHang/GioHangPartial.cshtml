@@ -1,0 +1,82 @@
+﻿@using AspShopPhone2.Models
+<style>
+    .header__cart-link {
+        display: inline-block;
+    }
+</style>
+<div class="header__cart-link" @*target="_top" href="@Url.Action("GioHang", "GioHang")"*@>
+
+    <label for="header__cart-input-box" class="header__cart-wrap">
+        <i class="header__cart-icon fa-sharp fa-solid fa-cart-shopping"></i>
+        <span class="header__cart-notice">@ViewBag.TongSoLuong</span>
+        <!-- no cart header__cart-contain--no-cart -->
+        <input type="checkbox" hidden id="header__cart-input-box">
+        <div class="header__cart-contain ">
+
+            
+            
+                @if (Session["GioHang"] != null)
+                {
+                    List<GioHang> lstGioHang = (List<GioHang>)Session["GioHang"]; // Thay YourTaikhoanType bằng kiểu dữ liệu thích hợp của Taikhoan
+
+                    <h4 class="header__cart-heading">Sản phẩm đã thêm</h4>
+                    <ul class="header__cart-list">
+                        @foreach (var item in lstGioHang)
+                        {
+                            <li class="header__cart-item">
+                                <img src="~/assets/img/sanPham/@item.dAnhBia" class="header__cart-img">
+                                <div class="header__cart-item-info">
+                                    <div class="header__cart-item-head">
+                                        <h5 class="header__cart-item-name">@item.dTenDT</h5>
+                                        <div class="header__cart-item-price-wrap">
+                                            <span class="header__cart-item-price">@String.Format("{0:0,0}", item.dThanhTien)</span>
+                                            <span class="header__cart-item-multiply">x</span>
+                                            <span class="header__cart-item-quantity">@item.dSoLuong</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="header__cart-item-body">
+                                        <span class="header__cart-item-description">Phân loại: @item.dtenTH</span>
+                                        @*<span class="header__cart-item-remove">Xoá</span>*@
+                                        @Html.ActionLink("Xoá", "XoaGioHang", new { @dMaSP = item.dMaDT }, new { @class = "header__cart-item-remove" })
+                                    </div>
+                                </div>
+                            </li>
+                         }
+                    </ul>
+                }
+                else
+                {
+                    <img src="~/assets/img/noCart.png" alt="Không có sản phẩm"
+                         class="header__cart-no-cart-img">
+                    <span class="header__cart-no-cart-msg">Chưa có sản phẩm</span>
+                }
+            
+            @*<li class="header__cart-item">
+                <img src="~/assets/img/sanPham/kiehls-face-mask-avocado-nourishing-hydration-mask-100g-000-3605971937811-whip.jpg"
+                     alt="" class="header__cart-img">
+                <div class="header__cart-item-info">
+                    <div class="header__cart-item-head">
+                        <h5 class="header__cart-item-name">Kem dưỡng vùng mắt</h5>
+                        <div class="header__cart-item-price-wrap">
+                            <span class="header__cart-item-price">2.202.200đ</span>
+                            <span class="header__cart-item-multiply">x</span>
+                            <span class="header__cart-item-quantity">2</span>
+                        </div>
+                    </div>
+
+                    <div class="header__cart-item-body">
+                        <span class="header__cart-item-description">Phân loại: Bạc</span>
+                        <span class="header__cart-item-remove">Xoá</span>
+                    </div>
+                </div>
+            </li>*@
+
+
+
+            <a class="header__cart-view-cart btn btn--primary" target="_top" href="@Url.Action("GioHang", "GioHang")">
+                Xem giỏ hàng
+            </a>
+        </div>
+    </label>
+</div>

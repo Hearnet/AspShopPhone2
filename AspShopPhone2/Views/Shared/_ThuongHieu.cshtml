@@ -1,0 +1,23 @@
+﻿@model IEnumerable<AspShopPhone2.Models.THUONGHIEU>
+@using AspShopPhone2.helper
+
+<nav class="category">
+    <h3 class="category__heading">Thương hiệu</h3>
+    <ul class="category-list">
+        @* li sẽ in chữ đỏ nếu thêm class category-item--active  *@
+        
+        @foreach (var thuonghieu in ViewBag.thuonghieu)
+        {
+
+            var isActive = CustomRazorHelpers.IsActive(thuonghieu.MaTH, ViewContext);
+
+            <li class="category-item @isActive" data-id="@thuonghieu.MaTH">
+                <a href="@Url.Action("ViewUrlThuongHieu","PhoneStore", new { id = thuonghieu.MaTH})"
+                   class="category-item__link ">
+                    @thuonghieu.TenThuongHieu 
+                </a>
+            </li>
+        }
+
+    </ul>
+</nav>

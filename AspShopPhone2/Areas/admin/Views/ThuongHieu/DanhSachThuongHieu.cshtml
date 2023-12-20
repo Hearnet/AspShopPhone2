@@ -1,0 +1,105 @@
+﻿@model AspShopPhone2.Models.THUONGHIEU
+
+@{
+    ViewBag.Title = "Thương hiệu";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+@section scripts {
+    <script src="~/Areas/plugins/bootbox.min.js"></script>
+    <script src="~/Areas/plugins/mustache.min.js"></script>
+    <script src="~/Areas/plugins/jquery.twbsPagination.min.js"></script>
+
+    <script src="~/Areas/js/controllers/thuonghieuController.js"></script>
+
+
+}
+
+
+
+<div class="modal" tabindex="-1" role="dialog" id="thuongHieuModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="modal-title" class="modal-title"></h5>
+            </div>
+            <div class="container">
+                <form id="addForm" enctype="multipart/form-data">
+
+                    <div style="margin-top: 10px" class="form-group">
+                        <input type="number" class="resettable" hidden id="idthuonghieu" name="MaTH" value="" />
+
+
+                        <label for="TenThuongHieu">Tên thương hiệu</label>
+                        <input type="text" class="form-control resettable" name="TenThuongHieu" id="TenThuongHieu" placeholder="Tên thương hiệu">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="CodeThuongHieu">CodeTH</label>
+                        <input type="text" class="form-control resettable" name="CodeThuongHieu" id="CodeThuongHieu">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnSubmit" class="btn btn-primary">Save changes</button>
+                <button type="button" id="btnCloseModal" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="card card-success mt-1">
+    <div class="card-header border-transparent">
+        <h3 class="card-title"><i class="fas fa-th mr-1"></i>Danh sách thương hiệu sản phẩm</h3>
+        <button id="btnADD" class="btn btn-success mx-3"
+                style=" right: 22px;
+                        top: 128px;
+                        display:flex;
+                        align-items: center;
+                        position: fixed;
+                        background: forestgreen;
+                        border-color: transparent;">
+            <i style="margin-right: 6px;" class="ti-plus"></i>Thêm mới
+        </button>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body p-0 mt-3">
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-hover">
+
+                <thead>
+                    <tr>
+                        <th scope="col" [width]="100" class="text-center">Tên Thương Hiệu</th>
+                        <th scope="col" [width]="200" class="text-center">Code</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tbody id="tblData"></tbody>
+
+            </table>
+
+
+
+
+            <script id="data-template" type="x-tmpl-mustache">
+                <tr>
+                    <td class="text-center">{{TenThuongHieu}}</td>
+                    <td class="text-center home-product-item__price">{{CodeThuongHieu}}</td>
+                    <td class="text-center">
+                        <button data-id="{{MaTH}}" class="btn btn-warning mx-3 btnChiTiet">Chi tiết</button>
+                        <button data-id="{{MaTH}}" class="btn btn-info btnUpDate">Sửa</button>
+                        <button data-id="{{MaTH}}" id="btnXoa" class="btn btn-danger mx-3">Xóa</button>
+                    </td>
+                </tr>
+
+            </script>
+        </div>
+    </div>
+</div>
+
+
+
+<div style="margin-top:50px" id="pagination" class="pagination my-custom-pagination"></div>

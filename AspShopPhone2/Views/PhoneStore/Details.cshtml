@@ -1,0 +1,134 @@
+﻿
+
+<style type="text/css">
+    .home-filter {
+        display: none;
+    }
+
+    .detail-product-brand {
+        font-size: 1.6rem;
+        font-weight: 300;
+        color: var(--text-color);
+    }
+
+    .detail-product-wrp {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .detail-product-brand-link {
+        font-size: 1.6rem;
+        color: var(--main-color);
+        font-weight: 300;
+        margin-left: 10px;
+    }
+    .detail-brand-wrap {
+        display: flex;
+        align-items: baseline;
+        justify-content: flex-start;
+        margin-left: 10px;
+    }
+
+    .pagination.home-product__pagination {
+        display: none;
+    }
+
+    .detail-product-img {
+        padding-top: 120%;
+        border-radius: 24px;
+        background-repeat: no-repeat;
+        background-size: cover;
+        margin-top: 10px;
+        background-position: center;
+    }
+
+    .detail-product-wrap {
+        position: relative;
+    }
+
+    .detail-product-name {
+        margin: 0px 0px 16px;
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--text-color);
+    }
+
+    .detail-product-tiltle {
+        display: block;
+        width: 100%;
+        line-height: 30px;
+        height: 30px;
+        margin: 0 0 8px 5px;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 400;
+        letter-spacing: 2px;
+        color: var(--main-color);
+        background-color: #ffffff;
+    }
+
+    .detail-product-tiltle-content {
+        color: var(--text-color);
+        font-size: 1.6rem;
+        word-spacing: 1px;
+        line-height: 2.4rem;
+        font-weight: 300;
+        text-align: justify;
+        margin-top: -6px;
+    }
+
+    .detail-product-price-wrap {
+        display: block;
+    }
+
+    .detail-product-buy-btn {
+        /*display: block;*/
+        font-size: 1.6rem;
+    }
+    .detail-product-buy-btn:hover{
+        opacity: 0.8;
+    }
+    .detail-product-wrap-content {
+        margin: 10px;
+    }
+</style>
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+
+<h3 class="detail-product-tiltle">CHI TIẾT SẢN PHẨM</h3>
+<div class="row" style="margin-bottom: 100px">
+    <div class="col l-4">
+
+        <div class="detail-product-img" style="background-image: url('@Url.Content("~/assets/img/sanPham/"+ Model.anhBia)')"></div>
+        @*<img class="detail-product-img" src="@Model.Anhbia" />*@
+    </div>
+    <div class="col l-8 detail-product-wrap">
+        <div class="detail-product-wrap-content">
+            <h4 class="detail-product-name">@Model.tenDienThoai</h4>
+            <p class="detail-product-tiltle-content">@Model.moTa</p>
+
+        </div>
+        <div class="detail-product-wrp">
+            <div class="detail-brand-wrap">
+                <h4 class="detail-product-brand">Thương hiệu:</h4>
+                <a href="@Url.Action("SanPhamTheoThuongHieu", "PhoneStore", new {id = Model.idTH })"
+                   class="detail-product-brand-link">@Model.tenTH</a>
+            </div>
+            <div class="detail-product-price-wrap">
+                <span class="home-product-item__price-current detail-product-price">@Model.TinhGiaMoi()</span>
+                <a href="@Url.Action("ThemGioHang", "GioHang", new {@dMaDT = @Model.id, @strURL = Request.Url.ToString()})"
+                   class="detail-product-buy-btn btn btn--primary">Đặt mua</a>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+

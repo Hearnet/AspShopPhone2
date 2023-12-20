@@ -1,0 +1,257 @@
+:root{
+    --white-color: #fff;
+    --black-color: #000;
+    --text-color: #333;
+    --main-color: rgb(247, 57, 23);
+    --border-color: #dbdbdb;
+    --navbar-height: 34px;
+    --header-height: 120px;
+    --header-sort-bar-height: 46px;
+    --header-body-height: calc(var(--header-height) - var(--navbar-height));
+}
+
+*{
+    box-sizing: inherit;
+}
+
+html{
+    font-size: 62.5%;
+    line-height: 1.6rem;
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+}
+
+.btn{
+    border: none;
+    background-color: var(--white-color);
+    min-width: 124px;
+    height: 34px;
+    text-decoration: none;
+    text-decoration: none;
+    font-size: 1.4rem;
+    padding: 0 12px;
+    border-radius: 2px;
+    cursor: pointer;
+    outline: none;
+    color: var(--text-color);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.6rem;
+}
+.btn.btn--normal:hover{
+    background-color: rgba(0,0,0,0.36);
+}
+
+.btn.btn--size-s{
+    height: 30px;
+    padding: 0 8px;
+    font-size: 1.2rem;
+}
+
+.btn.btn--disabled{
+    color: #333;
+    background-color: rgb(112, 111, 111);
+    cursor: default;
+}
+
+.btn.btn--primary{
+    color: var(--white-color);
+    background-color: var(--main-color);
+}
+
+.mt-16{
+    margin-top: 16px;
+}
+.mb-16{
+    margin-bottom: 16px;
+}
+.mr-8{
+    margin-right: 8px !important;
+}
+.ml-4 {
+    margin-left: 4px !important;
+}
+
+
+
+.grid__row{
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -5px;
+    margin-right: -5px;
+}  
+.grid__column-2{
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 16.6667%;
+}
+.grid__column-10{    
+    padding-left: 5px;
+    padding-right: 5px;    
+    width: 83.3334%;
+}
+.grid__column-2-4{
+    padding-left: 5px;
+    padding-right: 5px;    
+    width: 20%;
+}
+/* modal */
+.modal{
+    position: fixed;
+    animation: fadeIn linear 0.1s;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: none;
+    /* flex */
+}
+
+.modal__overlay{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.37);
+}
+
+.modal__body{
+    --growth-from: 0.5;
+    --growth-to: 1;
+    animation: growth linear 0.1s;
+    margin: auto;
+    z-index: 1;
+    position: relative;
+}
+
+.select-input{
+    min-width: 180px;
+    height: 34px;
+    position: relative;
+    padding: 0 12px;
+    border-radius: 2px;
+    background-color: var(--white-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.select-input:hover .select-input__list{
+    display: block;
+}
+
+.select-input__lable{
+    font-size: 1.4rem;
+}
+
+.select-input__icon{
+    font-size: 1.4rem;
+    color: #4A4A4A;
+    position: relative;
+    top: 1px;
+}
+
+.select-input__list{
+    position: absolute;
+    z-index: 10;
+    display: none;
+    list-style: none;
+    top: 25px;
+    left: 0;
+    border-radius: 2px;
+    right: 0;
+    padding: 8px 16px;
+    background-color: var(--white-color);
+}
+.select-input__list::before{
+    position: absolute;
+    content: "";
+    top: -3px;
+    left: 0;
+    height: 6px;
+    width: 100%;
+}
+
+.select-input__link{
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 1.4rem;
+    display: block;
+    padding: 4px 0;
+}
+
+.select-input__link:hover{
+    color: var(--main-color);
+}
+
+
+
+/* pagination */
+.pagination{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+}
+
+.pagination__item{
+    margin: 0 6px;
+}
+
+.pagination__item--active a{
+    background-color: var(--main-color);
+    color: var(--white-color);
+}
+
+.pagination__item-link:hover{
+    color: var(--main-color);
+    background-color: #e6e3e3;
+}
+
+.pagination__item--active .pagination__item-link:hover{
+    opacity: 0.8;
+}
+
+.pagination__item-link{
+    height: 30px;
+    text-decoration: none;
+    color: #939393;
+    min-width: 40px;
+    height: var(--height);
+    line-height: var(--height);
+    font-size: 2rem;
+    font-weight: 300;
+    display: block;
+    text-align: center;
+    border-radius: 2px;
+}
+
+.pagination__item-icon{
+    font-weight: 300;
+    font-size: 1.6rem;
+}
+
+
+
+
+/* animation */
+
+@keyframes fadeIn{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
+
+@keyframes growth{
+
+    from{
+        opacity: 0;
+        transform: scale(var(--growth-from));
+    }
+    to{
+        opacity: 1;
+        transform: scale(var(--growth-to));
+    }
+}

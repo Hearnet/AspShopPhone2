@@ -1,0 +1,152 @@
+﻿@using AspShopPhone2.Models;
+@model List<GioHang>
+
+
+@{
+    ViewBag.Title = "GioHang";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<style type="text/css">
+    .table-cart-item-submit, .table-cart__btn {
+        border: none;
+        background-color: var(--main-color);
+        padding: 8px;
+        color: white;
+        border-radius: 6px;
+        font-weight: 500;
+        text-decoration: none;
+        min-width: 110px;
+        display: inline-block;
+        text-align: center;
+    }
+
+    .detail-product-tiltle {
+        display: block;
+        width: 100%;
+        line-height: 30px;
+        height: 30px;
+        margin: 0 0 8px 5px;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 500;
+        letter-spacing: 2px;
+        color: var(--main-color);
+        background-color: #ffffff;
+    }
+
+    .table-cart-item-link {
+        color: var(--main-color);
+        font-size: 1.5rem;
+    }
+
+    .table-cart-item-submit,
+    .table-cart-item-link,
+    .table-cart__btn {
+        opacity: 1;
+        transition: opacity linear 0.1s;
+        cursor: pointer;
+    }
+
+        .table-cart-item-submit:hover,
+        .table-cart-item-link:hover,
+        .table-cart__btn:hover {
+            opacity: 0.6;
+        }
+
+    .table-cart {
+        text-align: center;
+        border: outset;
+        border-width: thin;
+        font-size: 1.3rem;
+    }
+
+    .table-cart__content {
+        text-align: center;
+    }
+
+    .table-cart__bottom {
+        text-align: right;
+        color: var(--main-color);
+        font-weight: 500;
+    }
+
+    .home-filter, .home-product__pagination {
+        display: none;
+    }
+
+    .table-cart-img {
+        width: 28%;
+        object-fit: cover;
+        height: 76px;
+    }
+
+    .table-cart__number-input {
+        width: 40px;
+        border: none;
+        padding: 0 4px;
+        border-radius: 5px;
+        height: 50px;
+        outline-color: var(--main-color);
+        text-align: center;
+    }
+
+    .table-cart__footer {
+        text-align: right;
+    }
+</style>
+<h3 class="detail-product-tiltle">THÔNG TIN GIỎ HÀNG</h3>
+<div class="col l-12">
+
+    <table class="table-cart" border="1">
+        <tr class="table-cart__content">
+            <td width="60px">Mã điện thoại</td>
+            <td>Tên sản phẩm</td>
+            <td>Ảnh bìa</td>
+            <td min-width="40px">Số lượng</td>
+            <td width="70px">Đơn giá</td>
+            <td width="70px">Thành tiền</td>
+            <td width="60px"></td>
+            <td width="50px"></td>
+            <td width="80px"></td>
+
+
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr class="table-cart__content">
+                <td>@item.dMaDT</td>
+                <td>@item.dTenDT</td>
+                <td width="300px"><img class="table-cart-img" src="~/assets/img/sanPham/@item.dAnhBia" /></td>
+                @using (Html.BeginForm("CapNhatGioHang", "GioHang", new { @dMaDT = item.dMaDT }))
+                {
+                    <td>
+                        <input class="table-cart__number-input" type="number" min="1" name="txtSoLuong" value="@item.dSoLuong" />
+                    </td>
+                    <td>@String.Format("{0:0,0}", item.dDongGia)</td>
+                    <td>@String.Format("{0:0,0}", item.dThanhTien)</td>
+                    <td><a target="_top" class="table-cart-item-link" href="@Url.Action("Details", "PhoneStore", new { id = item.dMaDT })">Chi tiết</a></td>
+                    <td>@Html.ActionLink("Xoá", "XoaGioHang", new { @dMaDT = item.dMaDT }, new { @class = "table-cart-item-link" })</td>
+                    <td><input class="table-cart-item-submit" type="submit" value="Cập nhật" />   </td>
+                }
+            </tr>
+        }
+
+        <tr class="table-cart__bottom">
+            <td colspan="4">Số lượng: @ViewBag.Tongsoluong</td>
+            <td colspan="5">Tổng tiền: @String.Format("{0:0,0}", ViewBag.Tongtien) VNĐ</td>
+        </tr>
+        <tr class="table-cart__footer">
+            <td height="40px" colspan="9">
+                @Html.ActionLink("Xoá tất cả", "XoaTatCa", null, new { @class = "table-cart__btn" })
+            </td>
+        </tr>
+        <tr class="table-cart__footer">
+            <td align="center" height="40px" colspan="9">
+                @Html.ActionLink("Đặt hàng", "DatHang", "GioHang", new { @class = "table-cart__btn" })
+            </td>
+        </tr>
+    </table>
+</div>
+

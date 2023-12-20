@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "Xác nhận đơn hàng";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<style>
+    .btn.btn--primary {
+        opacity: 1;
+        transition: opacity ease-in 0.1s;
+    }
+
+        .btn.btn--primary:hover {
+            opacity: 0.7;
+        }
+
+    .home-filter, .home-product__pagination {
+        display: none;
+    }
+</style>
+<div class="col l-12 l-o-3">
+    <h3 style="color: var(--text-color)">Đơn hàng đã được đặt, chúng tôi sẽ liên hệ quý khách trong thời gian sớm nhất, 
+    <br /> Vui lòng kiểm tra email để xem chi tiết đơn hàng của bạn.</h3>
+    <p class="l-o-2">
+        @Html.ActionLink("Về trang chủ", "Index", "PhoneStore", null, new { @class = "btn btn--primary", @target = "_top" })
+    </p>
+</div>
+
+

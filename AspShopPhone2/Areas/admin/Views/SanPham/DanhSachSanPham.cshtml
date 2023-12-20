@@ -1,0 +1,133 @@
+﻿@model AspShopPhone2.Models.DIENTHOAI
+
+@{
+    ViewBag.Title = "Sản Phẩm";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+@section scripts {
+    <script src="~/Areas/plugins/bootbox.min.js"></script>
+    <script src="~/Areas/plugins/mustache.min.js"></script>
+    <script src="~/Areas/plugins/jquery.twbsPagination.min.js"></script>
+
+    <script src="~/Areas/js/controllers/homeController.js"></script>
+
+
+}
+
+
+
+<div class="modal" tabindex="-1" role="dialog" id="sanPhamModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="modal-title" class="modal-title"></h5>
+            </div>
+            <div class="container">
+                <form id="addProductForm" enctype="multipart/form-data">
+
+                    <div style="margin-top: 10px" class="form-group">
+                        <input type="number" class="resettable" hidden id="iddienthoai" name="MaDT" value="" />
+
+
+                        <label for="TenDienThoai">Tên điện thoại</label>
+                        <input type="text" class="form-control resettable" name="TenDienThoai" id="TenDienThoai" placeholder="Tên điện thoại">
+                    </div>
+                    <div class="form-group">
+                        <label for="MaThuongHieu">Mã thương hiệu</label>
+                        @Html.DropDownList("MaTH", null, new { @class = "form-control", name = "MaTH", id = "MaTH", style = "color: black;" })
+                    </div>
+                    <div class="form-group">
+                        <label for="GiaBan">Giá Bán (VNĐ)</label>
+                        <input type="number" class="form-control resettable" name="GiaBan" id="GiaBan">
+                    </div>
+                    <div class="form-group">
+                        <label for="GiaGiam">Giá giảm (%)</label>
+                        <input type="number" class="form-control resettable" name="GiamGia" id="GiaGiam">
+                    </div>
+                    <div class="form-group">
+                        <label for="MoTa">Mô tả</label>
+                        <input type="text" class="form-control resettable" id="MoTa" name="MoTa">
+                    </div>
+                    <div class="form-group">
+                        <label for="fileInput">Ảnh bìa: </label><br />
+                        <img id="imgProduct" style="width: 80px; height: 80px;" src="">
+                        <input type="file" class="form-control-file resettable" id="fileInput" name="FileAnhBia" accept="image/*">
+                    </div>
+
+                    <input hidden type="datetime-local" value="@Html.Raw(DateTime.Now.ToString("yyyy-MM-dd HH:mm").Replace(' ', 'T'))" id="NgayCapNhat" name="NgayCapNhat" />
+                    <div class="form-group">
+                        <label for="SoLuongTon">Số lượng tồn</label>
+                        <input type="number" class="form-control resettable" name="SoLuongTon" id="SoLuongTon">
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnSubmit" class="btn btn-primary">Save changes</button>
+                <button type="button" id="btnCloseModal" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="card card-success mt-1">
+    <div class="card-header border-transparent">
+        <h3 class="card-title"><i class="fas fa-th mr-1"></i>Danh Sách Sản Phẩm</h3>
+        <button id="btnADD" class="btn btn-success mx-3"
+                style=" right: 22px;
+                        top: 128px;
+                        display:flex;
+                        align-items: center;
+                        position: fixed;
+                        background: forestgreen;
+                        border-color: transparent;">
+            <i style="margin-right: 6px;" class="ti-plus"></i>Thêm mới
+        </button>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body p-0 mt-3">
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-hover">
+
+                <thead>
+                    <tr>
+                        <th scope="col" [width]="100" class="text-center">ID</th>
+                        <th scope="col" [width]="200" class="text-center">Tên Sản Phẩm</th>
+                        <th scope="col" [width]="200" class="text-center">Đơn Giá</th>
+                        <th scope="col" [width]="200" class="text-center">Hình Sản Phẩm</th>
+                        <th scope="col" [width]="200" class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tbody id="tblData"></tbody>
+
+            </table>
+
+
+
+
+            <script id="data-template" type="x-tmpl-mustache">
+                <tr>
+                    <td class="text-center">{{ID}}</td>
+                    <td class="text-center">{{TenDienThoai}}</td>
+                    <td class="text-center home-product-item__price">{{GiaBan}}</td>
+                    <td class="text-center"><img src="/assets/img/sanPham/{{AnhBia}}"></td>
+                    <td class="text-center">
+                        <button data-id="{{ID}}" class="btn btn-warning mx-3 btnChiTiet">Chi tiết</button>
+                        <button data-id="{{ID}}" class="btn btn-info btnUpDate">Sửa</button>
+                        <button data-id="{{ID}}" id="btnXoa" class="btn btn-danger mx-3">Xóa</button>
+                    </td>
+                </tr>
+
+            </script>
+        </div>
+    </div>
+</div>
+
+
+
+<div style="margin-top:50px" id="pagination" class="pagination my-custom-pagination"></div>
