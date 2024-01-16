@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -18,24 +19,7 @@ namespace AspShopPhone2.Controllers
         public ActionResult Index(int ? page)
         {
             int pageNum = (page ?? 1); // giá trị trang hiện tại
-            //Session["SearchPrice"] = null;
-            //Session["SearchName"] = null;
-            //var query = from a in data.DIENTHOAIs
-            //            join b in data.THUONGHIEUx
-            //            on a.MaTH equals b.MaTH
-            //            orderby a.NgayCapNhat descending
-            //            select new ChiTietSanPham
-            //            {
-            //                id = a.MaDT,
-            //                tenDienThoai = a.TenDienThoai,
-            //                giaBan = (decimal)a.GiaBan,
-            //                giaGiam = (int)a.GiamGia,
-            //                codeTH = b.CodeThuongHieu,
-            //                tenTH = b.TenThuongHieu,
-            //                anhBia = a.AnhBia,
-            //                moTa = a.MoTa,
-            //                soLuongTon = (int)a.SoLuongTon
-            //            };
+           
             return View(querySearch().ToList().ToPagedList(pageNum, pageSize));
         }
 
@@ -50,147 +34,181 @@ namespace AspShopPhone2.Controllers
         }
         private List<ChiTietSanPham> querySearch(/*string searchName, bool isUpPrice*/)
         {
-            List<ChiTietSanPham> products = new List<ChiTietSanPham>();
-             string searchName = Session["SearchName"] as string;
-             string searchPrice = Session["searchPrice"] as string;
-             
-            if (!string.IsNullOrEmpty(searchName))
-            {
-                if (!string.IsNullOrEmpty(searchPrice))
-                {
-                    bool isUpPrice = bool.Parse(searchPrice);
-                    if (isUpPrice)
-                    {
-                        products = (from a in data.DIENTHOAIs
-                                    join b in data.THUONGHIEUx
-                                    on a.MaTH equals b.MaTH
-                                    where a.TenDienThoai.ToUpper().Contains(searchName.ToUpper())
-                                    orderby a.GiaBan ascending
-                                    select new ChiTietSanPham
-                                    {
-                                        id = a.MaDT,
-                                        tenDienThoai = a.TenDienThoai,
-                                        giaBan = (decimal)a.GiaBan,
-                                        giaGiam = (int)a.GiamGia,
-                                        codeTH = b.CodeThuongHieu,
-                                        tenTH = b.TenThuongHieu,
-                                        anhBia = a.AnhBia,
-                                        moTa = a.MoTa,
-                                        soLuongTon = (int)a.SoLuongTon
-                                    }).ToList();
-                    }
-                    else
-                    {
-                        products = (from a in data.DIENTHOAIs
-                                    join b in data.THUONGHIEUx
-                                    on a.MaTH equals b.MaTH
-                                    where a.TenDienThoai.ToUpper().Contains(searchName.ToUpper())
-                                    orderby a.GiaBan descending
-                                    select new ChiTietSanPham
-                                    {
-                                        id = a.MaDT,
-                                        tenDienThoai = a.TenDienThoai,
-                                        giaBan = (decimal)a.GiaBan,
-                                        giaGiam = (int)a.GiamGia,
-                                        codeTH = b.CodeThuongHieu,
-                                        tenTH = b.TenThuongHieu,
-                                        anhBia = a.AnhBia,
-                                        moTa = a.MoTa,
-                                        soLuongTon = (int)a.SoLuongTon
-                                    }).ToList();
-                    }
-                }
-                else products = querySearchByName(searchName);
+            //List<ChiTietSanPham> products = new List<ChiTietSanPham>();
+            // string searchName = Session["SearchName"] as string;
+            // string searchPrice = Session["searchPrice"] as string;
+
+            //if (!string.IsNullOrEmpty(searchName))
+            //{
+            //    if (!string.IsNullOrEmpty(searchPrice))
+            //    {
+            //        bool isUpPrice = bool.Parse(searchPrice);
+            //        if (isUpPrice)
+            //        {
+            //            products = (from a in data.DIENTHOAIs
+            //                        join b in data.THUONGHIEUx
+            //                        on a.MaTH equals b.MaTH
+            //                        where a.TenDienThoai.ToUpper().Contains(searchName.ToUpper())
+            //                        orderby a.GiaBan ascending
+            //                        select new ChiTietSanPham
+            //                        {
+            //                            id = a.MaDT,
+            //                            tenDienThoai = a.TenDienThoai,
+            //                            giaBan = (decimal)a.GiaBan,
+            //                            giaGiam = (int)a.GiamGia,
+            //                            codeTH = b.CodeThuongHieu,
+            //                            tenTH = b.TenThuongHieu,
+            //                            anhBia = a.AnhBia,
+            //                            moTa = a.MoTa,
+            //                            soLuongTon = (int)a.SoLuongTon
+            //                        }).ToList();
+            //        }
+            //        else
+            //        {
+            //            products = (from a in data.DIENTHOAIs
+            //                        join b in data.THUONGHIEUx
+            //                        on a.MaTH equals b.MaTH
+            //                        where a.TenDienThoai.ToUpper().Contains(searchName.ToUpper())
+            //                        orderby a.GiaBan descending
+            //                        select new ChiTietSanPham
+            //                        {
+            //                            id = a.MaDT,
+            //                            tenDienThoai = a.TenDienThoai,
+            //                            giaBan = (decimal)a.GiaBan,
+            //                            giaGiam = (int)a.GiamGia,
+            //                            codeTH = b.CodeThuongHieu,
+            //                            tenTH = b.TenThuongHieu,
+            //                            anhBia = a.AnhBia,
+            //                            moTa = a.MoTa,
+            //                            soLuongTon = (int)a.SoLuongTon
+            //                        }).ToList();
+            //        }
+            //    }
+            //    else products = querySearchByName(searchName);
 
 
-            } else
-            {
-                // Trường hợp không có giá trị tìm kiếm từ ViewBag, trả về tất cả sản phẩm
-                if (!string.IsNullOrEmpty(searchPrice))
-                {
-                    bool isUpPrice = bool.Parse(searchPrice);
-                    if (isUpPrice)
+            //} else
+            //{
+            //    // Trường hợp không có giá trị tìm kiếm từ ViewBag, trả về tất cả sản phẩm
+            //    if (!string.IsNullOrEmpty(searchPrice))
+            //    {
+            //        bool isUpPrice = bool.Parse(searchPrice);
+            //        if (isUpPrice)
+            //        {
+            //            products = (from a in data.DIENTHOAIs
+            //                        join b in data.THUONGHIEUx
+            //                        on a.MaTH equals b.MaTH
+            //                        orderby a.GiaBan ascending
+            //                        select new ChiTietSanPham
+            //                        {
+            //                            id = a.MaDT,
+            //                            tenDienThoai = a.TenDienThoai,
+            //                            giaBan = (decimal)a.GiaBan,
+            //                            giaGiam = (int)a.GiamGia,
+            //                            codeTH = b.CodeThuongHieu,
+            //                            tenTH = b.TenThuongHieu,
+            //                            anhBia = a.AnhBia,
+            //                            moTa = a.MoTa,
+            //                            soLuongTon = (int)a.SoLuongTon
+            //                        }).ToList();
+            //        }
+            //        else
+            //        {
+            //            products = (from a in data.DIENTHOAIs
+            //                        join b in data.THUONGHIEUx
+            //                        on a.MaTH equals b.MaTH
+            //                        orderby a.GiaBan descending
+            //                        select new ChiTietSanPham
+            //                        {
+            //                            id = a.MaDT,
+            //                            tenDienThoai = a.TenDienThoai,
+            //                            giaBan = (decimal)a.GiaBan,
+            //                            giaGiam = (int)a.GiamGia,
+            //                            codeTH = b.CodeThuongHieu,
+            //                            tenTH = b.TenThuongHieu,
+            //                            anhBia = a.AnhBia,
+            //                            moTa = a.MoTa,
+            //                            soLuongTon = (int)a.SoLuongTon
+            //                        }).ToList();
+            //        }
+            //    } else
+            //    {
+            //        products = (from a in data.DIENTHOAIs
+            //                    join b in data.THUONGHIEUx
+            //                    on a.MaTH equals b.MaTH
+            //                    orderby a.NgayCapNhat descending
+            //                    select new ChiTietSanPham
+            //                    {
+            //                        id = a.MaDT,
+            //                        tenDienThoai = a.TenDienThoai,
+            //                        giaBan = (decimal)a.GiaBan,
+            //                        giaGiam = (int)a.GiamGia,
+            //                        codeTH = b.CodeThuongHieu,
+            //                        tenTH = b.TenThuongHieu,
+            //                        anhBia = a.AnhBia,
+            //                        moTa = a.MoTa,
+            //                        soLuongTon = (int)a.SoLuongTon
+            //                    }).ToList();
+            //    }
+
+            //}
+
+            //return products;
+        string searchName = Session["SearchName"] as string;
+        string searchPrice = Session["SearchPrice"] as string;
+        string searchPriceRange = Session["SearchPriceRange"] as string;
+        var query = from a in data.DIENTHOAIs
+                    join b in data.THUONGHIEUx
+                    on a.MaTH equals b.MaTH
+                    where (string.IsNullOrEmpty(searchName) || a.TenDienThoai.ToUpper().Contains(searchName.ToUpper())) &&
+                  (string.IsNullOrEmpty(searchPriceRange) ||
+                   (searchPriceRange == "less3" && a.GiaBan < 3000000) ||
+                   (searchPriceRange == "3and10" && a.GiaBan >= 3000000 && a.GiaBan <= 10000000) ||
+                   (searchPriceRange == "more10" && a.GiaBan > 10000000))
+                    select new ChiTietSanPham
                     {
-                        products = (from a in data.DIENTHOAIs
-                                    join b in data.THUONGHIEUx
-                                    on a.MaTH equals b.MaTH
-                                    orderby a.GiaBan ascending
-                                    select new ChiTietSanPham
-                                    {
-                                        id = a.MaDT,
-                                        tenDienThoai = a.TenDienThoai,
-                                        giaBan = (decimal)a.GiaBan,
-                                        giaGiam = (int)a.GiamGia,
-                                        codeTH = b.CodeThuongHieu,
-                                        tenTH = b.TenThuongHieu,
-                                        anhBia = a.AnhBia,
-                                        moTa = a.MoTa,
-                                        soLuongTon = (int)a.SoLuongTon
-                                    }).ToList();
-                    }
-                    else
-                    {
-                        products = (from a in data.DIENTHOAIs
-                                    join b in data.THUONGHIEUx
-                                    on a.MaTH equals b.MaTH
-                                    orderby a.GiaBan descending
-                                    select new ChiTietSanPham
-                                    {
-                                        id = a.MaDT,
-                                        tenDienThoai = a.TenDienThoai,
-                                        giaBan = (decimal)a.GiaBan,
-                                        giaGiam = (int)a.GiamGia,
-                                        codeTH = b.CodeThuongHieu,
-                                        tenTH = b.TenThuongHieu,
-                                        anhBia = a.AnhBia,
-                                        moTa = a.MoTa,
-                                        soLuongTon = (int)a.SoLuongTon
-                                    }).ToList();
-                    }
-                } else
-                {
-                    products = (from a in data.DIENTHOAIs
-                                join b in data.THUONGHIEUx
-                                on a.MaTH equals b.MaTH
-                                orderby a.NgayCapNhat descending
-                                select new ChiTietSanPham
-                                {
-                                    id = a.MaDT,
-                                    tenDienThoai = a.TenDienThoai,
-                                    giaBan = (decimal)a.GiaBan,
-                                    giaGiam = (int)a.GiamGia,
-                                    codeTH = b.CodeThuongHieu,
-                                    tenTH = b.TenThuongHieu,
-                                    anhBia = a.AnhBia,
-                                    moTa = a.MoTa,
-                                    soLuongTon = (int)a.SoLuongTon
-                                }).ToList();
-                }
-                
-            }
-                
-            return products;
-        }
-        private List<ChiTietSanPham> querySearchByName(string searchName)
+                        id = a.MaDT,
+                        tenDienThoai = a.TenDienThoai,
+                        giaBan = (decimal)a.GiaBan,
+                        giaGiam = (int)a.GiamGia,
+                        codeTH = b.CodeThuongHieu,
+                        tenTH = b.TenThuongHieu,
+                        anhBia = a.AnhBia,
+                        moTa = a.MoTa,
+                        soLuongTon = (int)a.SoLuongTon,
+                        NgayCapNhat = (DateTime)a.NgayCapNhat
+                    };
+
+        if (!string.IsNullOrEmpty(searchPrice))
         {
-            List<ChiTietSanPham> products = (from a in data.DIENTHOAIs
-                        join b in data.THUONGHIEUx
-                        on a.MaTH equals b.MaTH
-                        where a.TenDienThoai.ToUpper().Contains(searchName.ToUpper())
-                        select new ChiTietSanPham
-                        {
-                            id = a.MaDT,
-                            tenDienThoai = a.TenDienThoai,
-                            giaBan = (decimal)a.GiaBan,
-                            giaGiam = (int)a.GiamGia,
-                            codeTH = b.CodeThuongHieu,
-                            tenTH = b.TenThuongHieu,
-                            anhBia = a.AnhBia,
-                            moTa = a.MoTa,
-                            soLuongTon = (int)a.SoLuongTon,
-                            idTH = b.MaTH
-                        }).ToList();
-            return products;
+            bool isUpPrice = bool.Parse(searchPrice);
+            query = isUpPrice ? query.OrderBy(a => a.giaBan) : query.OrderByDescending(a => a.giaBan);
+        }
+        else
+        {
+            query = query.OrderByDescending(a => a.NgayCapNhat);
+        }
+            return query.ToList();
+
+        }
+
+        
+        // Hàm kiểm tra khoảng giá
+        private bool CheckPriceRange(decimal price, string searchPriceRange)
+        {
+            if (searchPriceRange == "less3")
+            {
+                return price < 3000000;
+            }
+            else if (searchPriceRange == "3and10")
+            {
+                return price >= 3000000 && price <= 10000000;
+            }
+            else if (searchPriceRange == "more10")
+            {
+                return price > 10000000;
+            }
+            return true;
         }
         //Tìm kiếm sản phẩm theo tên
         [HttpPost]
@@ -205,17 +223,28 @@ namespace AspShopPhone2.Controllers
                 return View("Index", querySearch().ToPagedList(pageNumber, pageSize));
             } else return RedirectToAction("Index");
         }
-        //tìm kiếm sản phẩm theo giá
+        //sắp xếp sản phẩm theo giá
         public ActionResult SearchByPrice(bool priceUp, int ? page)
         {
             int pageNumber = page ?? 1;
-            string searchName = Session["SearchName"] as string; // Lấy giá trị từ session tìm kiếm
             Session["SearchPrice"] = priceUp.ToString();
 
             return View("Index", querySearch().ToPagedList(pageNumber, pageSize));
             
 
             
+        }
+
+        //tìm kiếm sản phẩm theo giá
+        public ActionResult SearchByPriceRange(string priceRange, int? page)
+        {
+            int pageNumber = page ?? 1;
+            Session["SearchPriceRange"] = priceRange.ToString();
+
+            return View("Index", querySearch().ToPagedList(pageNumber, pageSize));
+
+
+
         }
         // Xử lí url 
         public ActionResult ViewUrlThuongHieu(int id)

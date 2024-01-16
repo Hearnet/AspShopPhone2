@@ -412,15 +412,15 @@
                                 <i class="select-input__icon fa-solid fa-angle-down"></i>
                                 <ul class="select-input__list">
                                     <li class="select-input__item">
-                                        <a href="#" class="select-input__link">Dưới 3 triệu</a>
+                                        <a href="@Url.Action("SearchByPriceRange", "PhoneStore", new { priceRange = "less3"})" class="select-input__link">Dưới 3 triệu</a>
                                     </li>
                                     <li class="select-input__item">
 
-                                        <a href="#" class="select-input__link">Từ 3 đến 10 triệu</a>
+                                        <a href="@Url.Action("SearchByPriceRange", "PhoneStore", new { priceRange = "3and10"})" class="select-input__link">Từ 3 đến 10 triệu</a>
                                     </li>
                                     <li class="select-input__item">
 
-                                        <a href="#" class="select-input__link">Trên 10 triệu</a>
+                                        <a href="@Url.Action("SearchByPriceRange", "PhoneStore", new { priceRange = "more10"})" class="select-input__link">Trên 10 triệu</a>
                                     </li>
                                 </ul>
                             </div>

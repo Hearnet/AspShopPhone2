@@ -48,11 +48,11 @@
         cursor: pointer;
     }
 
-        .table-cart-item-submit:hover,
-        .table-cart-item-link:hover,
-        .table-cart__btn:hover {
-            opacity: 0.6;
-        }
+    .table-cart-item-submit:hover,
+    .table-cart-item-link:hover,
+    .table-cart__btn:hover {
+        opacity: 0.6;
+    }
 
     .table-cart {
         text-align: center;
@@ -110,7 +110,6 @@
             <td width="50px"></td>
             <td width="80px"></td>
 
-
         </tr>
 
         @foreach (var item in Model)
@@ -127,7 +126,7 @@
                     <td>@String.Format("{0:0,0}", item.dDongGia)</td>
                     <td>@String.Format("{0:0,0}", item.dThanhTien)</td>
                     <td><a target="_top" class="table-cart-item-link" href="@Url.Action("Details", "PhoneStore", new { id = item.dMaDT })">Chi tiết</a></td>
-                    <td>@Html.ActionLink("Xoá", "XoaGioHang", new { @dMaDT = item.dMaDT }, new { @class = "table-cart-item-link" })</td>
+                    <td>@Html.ActionLink("Xoá", "XoaGioHang", new { @dMaSP = item.dMaDT }, new { @class = "table-cart-item-link" })</td>
                     <td><input class="table-cart-item-submit" type="submit" value="Cập nhật" />   </td>
                 }
             </tr>
